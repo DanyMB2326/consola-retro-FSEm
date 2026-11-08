@@ -30,6 +30,22 @@ def registrar(texto):
         pass
 
 
+proceso = None  # emulador en curso (para poder cerrarlo si algo falla)
+
+
+def matar_emulador():
+    """Si un error deja el emulador abierto, lo cierra para liberar la pantalla."""
+    global proceso
+    if proceso is not None and proceso.poll() is None:
+        try:
+            proceso.send_signal(signal.SIGCONT)  # por si quedo en pausa
+        except OSError:
+            pass
+        proceso.kill()
+        proceso.wait()
+    proceso = None
+
+
 # Video directo a la pantalla (sin escritorio). Debe ir antes de importar pygame.
 os.environ.setdefault("SDL_VIDEODRIVER", "kmsdrm")
 os.environ.setdefault("SDL_AUDIODRIVER", "alsa")  # audio directo, sin servidor de sonido
@@ -150,7 +166,6 @@ def menu(mensaje=None):
     `mensaje` es un aviso opcional (por ejemplo, el resultado de copiar un USB).
     """
     roms = buscar_roms()
-    pygame.display.init()
     pygame.font.init()
     pygame.joystick.init()
     # Hay que guardar el objeto: si se descarta, pygame cierra el control
@@ -159,15 +174,16 @@ def menu(mensaje=None):
     # Justo despues de un juego el video puede tardar un instante en quedar
     # libre, asi que se reintenta en vez de cerrar el programa.
     pantalla = None
-    for intento in range(40):
+    for intento in range(60):
         try:
+            pygame.display.init()
             pantalla = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
             break
         except pygame.error as error:
-            registrar(f"set_mode fallo (intento {intento + 1}): {error}")
+            if intento in (0, 9, 29, 59):  # no llenar el registro
+                registrar(f"Pantalla no disponible (intento {intento + 1}): {error}")
             pygame.display.quit()
-            time.sleep(0.25)
-            pygame.display.init()
+            time.sleep(0.5)
     if pantalla is None:
         raise RuntimeError("No se pudo abrir la pantalla")
     pygame.mouse.set_visible(False)
@@ -202,6 +218,9 @@ def menu(mensaje=None):
             usb_previo = ahora
 
         for e in pygame.event.get():
+            if e.type == pygame.JOYDEVICEADDED:  # el control volvio a conectarse
+                control = pygame.joystick.Joystick(e.device_index)
+                continue
             if not roms:
                 continue
             if e.type == pygame.JOYHATMOTION:
@@ -336,6 +355,7 @@ def animacion_inicio():
 
 def jugar(ruta):
     """Lanza Mednafen y lo cierra si se pulsan Select y Start a la vez."""
+    global proceso
     pygame.quit()  # libera la pantalla para el emulador
     time.sleep(0.5)  # deja que el sistema libere el video antes del emulador
     env = dict(os.environ, SDL_VIDEODRIVER="kmsdrm")
@@ -349,6 +369,7 @@ def jugar(ruta):
     proc = subprocess.Popen(
         [mednafen, "-video.driver", "softfb", ruta],
         env=env, stdout=salida, stderr=subprocess.STDOUT)
+    proceso = proc
 
     try:
         fd = os.open(JS_DEV, os.O_RDONLY | os.O_NONBLOCK)
@@ -374,10 +395,23 @@ def jugar(ruta):
                             pulsados.discard(numero)
             except BlockingIOError:
                 pass
+            except OSError:
+                # El control se desconecto (por ejemplo, un bajon de voltaje al
+                # conectar el USB). No es un error fatal: se espera a que vuelva.
+                registrar("Control desconectado; esperando a que vuelva")
+                os.close(fd)
+                fd = None
+                pulsados.clear()
             if {BTN_SELECT, BTN_START} <= pulsados:
                 proc.terminate()
                 break
         ticks += 1
+        if fd is None and ticks % 50 == 0:  # intenta recuperar el control
+            try:
+                fd = os.open(JS_DEV, os.O_RDONLY | os.O_NONBLOCK)
+                registrar("Control reconectado")
+            except OSError:
+                pass
         if ticks % 50 == 0:  # revisa el USB una vez por segundo
             ahora = hay_usb()
             if ahora and not usb_previo:
@@ -418,6 +452,7 @@ def main():
             # Un error no debe reiniciar todo (y repetir el logo): se registra
             # y se vuelve al menu.
             registrar("Error:\n" + traceback.format_exc())
+            matar_emulador()
             mensaje = "Ocurrio un error (ver ~/launcher.log)"
             pygame.quit()
             time.sleep(1.0)
