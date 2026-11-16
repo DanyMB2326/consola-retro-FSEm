@@ -1,3 +1,7 @@
+# BIT-BOY: servicio de systemd que lanza la consola al encender
+# Autores: Daniela Martinez | Judith Mora | Luis Hernández
+# Licencia: MIT
+
 [Unit]
 Description=Consola retro BIT-BOY (lanzador de ROMS)
 
