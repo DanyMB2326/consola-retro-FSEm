@@ -35,7 +35,7 @@
 | 🍓 **Placa** | Raspberry Pi 3 B+ en carcasa con ventilador |
 | 🎮 **Control** | GameSir K1 |
 | 🕹️ **Emulador** | Mednafen |
-| 👾 **Juegos** | 39 ROMs homebrew (ver la biblioteca de juegos en `ROMS.md`) |
+| 👾 **Juegos** | 39 ROMs homebrew (ver la biblioteca de juegos en `roms.MD`) |
 
 ---
 
