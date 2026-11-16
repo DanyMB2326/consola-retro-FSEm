@@ -11,6 +11,7 @@
 #
 # Autor: Daniela Martinez | Judith Mora | Luis Hernández
 # Licencia: MIT
+
 set -euo pipefail
 
 REINICIAR=1
