@@ -134,8 +134,8 @@ flowchart LR
 
 ```bash
 sudo apt-get install -y git
-git clone https://github.com/USUARIO/REPOSITORIO.git
-cd REPOSITORIO/src
+git clone https://github.com/DanyMB2326/consola-retro-FSEm
+cd consola-retro-FSEm/src
 ./install.sh
 ```
 
