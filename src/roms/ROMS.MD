@@ -233,6 +233,6 @@ Gracias a todas las personas que siguen haciendo juegos nuevos para consolas cl�
 
 <sub>Datos tomados de las páginas de itch.io de cada juego en noviembre de 2026.</sub>
 
-[⬆ Volver arriba](#-biblioteca-de-juegos-de-bit-boy) · [📖 README](README.md)
+[⬆ Volver arriba](#-biblioteca-de-juegos-de-bit-boy)
 
 </div>
