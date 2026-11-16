@@ -1,5 +1,10 @@
 #!/bin/bash
-# BIT-BOY: revision rapida de salud de la consola antes de una demo/entrega.
+# BIT-BOY: revision rapida de salud de la consola antes de una demo.
+#
+# Autores: Daniela Martinez | Judith Mora | Luis Hernández
+# Licencia: MIT
+# BIT-BOY: revision rapida de de la consola antes de una entrega.
+
 ok(){ echo "[ok]    $1"; }; mal(){ echo "[FALLA] $1"; fallos=$((fallos+1)); }
 fallos=0
 t=$(vcgencmd get_throttled | cut -d= -f2)
