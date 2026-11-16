@@ -1,4 +1,4 @@
-<div align="center">
+https://github.com/DanyMB2326/consola-retro-FSEm/tree/main<div align="center">
 
 # 🎬 Video demostrativo de BIT-BOY
 
@@ -35,7 +35,7 @@
 | 🍓 **Placa** | Raspberry Pi 3 B+ en carcasa con ventilador |
 | 🎮 **Control** | GameSir K1 |
 | 🕹️ **Emulador** | Mednafen |
-| 👾 **Juegos** | 39 ROMs homebrew (ver la biblioteca de juegos en `ROMS.md`) |
+| 👾 **Juegos** | 39 ROMs homebrew (ver la biblioteca de juegos en `roms.MD`) |
 
 ---
 
