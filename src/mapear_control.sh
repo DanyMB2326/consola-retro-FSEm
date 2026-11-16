@@ -7,6 +7,7 @@
 #       CFG=/ruta/mednafen.cfg ./mapear_control.sh
 #
 # Autor: Daniela Martinez | Judith Mora | Luis Hernández  Licencia: MIT
+
 set -euo pipefail
 
 CFG="${CFG:-$HOME/.mednafen/mednafen.cfg}"
