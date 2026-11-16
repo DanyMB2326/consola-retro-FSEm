@@ -1,6 +1,11 @@
 #!/bin/bash
 # BIT-BOY: abre cada ROM unos segundos y avisa cuales no arrancan.
+#
+# Autores: Daniela Martinez | Judith Mora | Luis Hernández
+# Licencia: MIT
+# BIT-BOY: abre cada ROM unos segundos y avisa cuales no arrancan.
 # Uso: bash probar_roms.sh [segundos por juego, por defecto 6]
+
 SEG="${1:-6}"
 sudo systemctl stop retro.service
 export SDL_VIDEODRIVER=kmsdrm
