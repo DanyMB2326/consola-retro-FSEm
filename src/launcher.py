@@ -5,7 +5,7 @@ Muestra las ROMS de ~/roms/{nes,snes,gba}, lanza Mednafen con la elegida y
 vuelve al menu al salir del juego (Select + Start en el gamepad). Al conectar
 una memoria USB copia las ROMS nuevas.
 
-Autor: Daniela Martinez Bravo
+Autores: Daniela Martinez | Judith Mora | Luis Hernández
 Licencia: MIT
 """
 import ctypes
