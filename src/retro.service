@@ -1,0 +1,22 @@
+[Unit]
+Description=Consola retro BIT-BOY (lanzador de ROMS)
+
+[Service]
+User=__USER__
+Group=__USER__
+SupplementaryGroups=video render input audio
+Environment=HOME=__HOME__
+Environment=SDL_VIDEODRIVER=kmsdrm
+WorkingDirectory=__HOME__
+TTYPath=/dev/tty1
+StandardInput=tty
+StandardOutput=journal
+StandardError=journal
+TimeoutStopSec=5
+ExecStartPre=/bin/sh -c 'for i in $$(seq 1 100); do [ -e /dev/dri/card0 ] && [ -e /dev/input/js0 ] && grep -q vc4hdmi /proc/asound/cards && exit 0; sleep 0.1; done; exit 0'
+ExecStart=/usr/bin/python3 __HOME__/launcher.py
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
