@@ -1,5 +1,10 @@
 #!/bin/bash
+# BIT-BOY: prueba que controlador de video de Mednafen se ve en pantalla.
+#
+# Autores: Daniela Martinez | Judith Mora | Luis Hernández
+# Licencia: MIT
 # Prueba que driver de video de Mednafen se ve en kmsdrm. Uso: ./prueba_mednafen.sh /ruta/juego.nes
+
 sudo systemctl stop retro.service
 export SDL_VIDEODRIVER=kmsdrm
 for d in opengl sdl softfb; do
