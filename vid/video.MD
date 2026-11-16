@@ -1,5 +1,3 @@
-https://github.com/DanyMB2326/consola-retro-FSEm/tree/main<div align="center">
-
 # 🎬 Video demostrativo de BIT-BOY
 
 ### Consola retro con Raspberry Pi 3 B+
