@@ -8,6 +8,7 @@ una memoria USB copia las ROMS nuevas.
 Autores: Daniela Martinez | Judith Mora | Luis Hernández
 Licencia: MIT
 """
+
 import ctypes
 import glob
 import hashlib
