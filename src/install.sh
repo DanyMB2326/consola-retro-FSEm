@@ -17,7 +17,7 @@ set -euo pipefail
 REINICIAR=1
 [ "${1:-}" = "--no-reboot" ] && REINICIAR=0
 
-# Rutas (se pueden sustituir con variables de entorno para pruebas)
+# Rutas
 BOOT_DIR="${BOOT_DIR:-/boot/firmware}"
 SUDOERS_DIR="${SUDOERS_DIR:-/etc/sudoers.d}"
 SYSTEMD_DIR="${SYSTEMD_DIR:-/etc/systemd/system}"
@@ -128,7 +128,7 @@ CMDLINE="$BOOT_DIR/cmdline.txt"
 [ -f "$CMDLINE" ] || falla "No existe $CMDLINE"
 [ -f "$CMDLINE.bak-bitboy" ] || sudo_ cp "$CMDLINE" "$CMDLINE.bak-bitboy"
 linea="$(tr '\n' ' ' < "$CMDLINE" | sed 's/  */ /g; s/ *$//')"
-# la consola de texto pasa a tty3 (que nadie mira)
+# la consola de texto pasa a tty3
 linea="$(printf '%s' "$linea" | sed -E 's/(^| )console=tty[0-9]+/\1console=tty3/g')"
 printf '%s' "$linea" | grep -q 'console=tty3' || linea="$linea console=tty3"
 for par in quiet loglevel=0 logo.nologo vt.global_cursor_default=0 systemd.show_status=0 consoleblank=0 vt.color=0x00; do
@@ -163,7 +163,7 @@ sed -e "s|__USER__|$USUARIO|g" -e "s|__HOME__|$CASA|g" "$AQUI/retro.service" > "
 sudo_ install -m 644 "$tmp" "$SYSTEMD_DIR/retro.service"
 rm -f "$tmp"
 if [ "$SOLO_ARCHIVOS" != 1 ]; then
-    sudo systemctl mask getty@tty1.service        # nada mas usa la pantalla
+    sudo systemctl mask getty@tty1.service 
     sudo systemctl daemon-reload
     sudo systemctl enable retro.service
     # arranque mas rapido: cloud-init no se usa en una consola
