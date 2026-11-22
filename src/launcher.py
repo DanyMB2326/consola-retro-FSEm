@@ -962,6 +962,9 @@ def jugar(ruta):
     time.sleep(0.5)  # deja que el sistema libere el video antes del emulador
     env = dict(os.environ, SDL_VIDEODRIVER="kmsdrm")
     env.pop("SDL_NO_SIGNAL_HANDLERS", None)  # Mednafen si debe cerrar con calma
+    lib_cursor = os.path.expanduser("~/sin_cursor.so")
+    if os.path.exists(lib_cursor):
+        env["LD_PRELOAD"] = lib_cursor
     registrar(f"Lanzando mednafen: {ruta}")
     salida = open(os.path.expanduser("~/mednafen_ultimo.log"), "w")
     inicio = time.time()
