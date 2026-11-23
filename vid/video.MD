@@ -6,9 +6,9 @@
 
 *Mira la consola funcionando: del arranque al primer juego, solo con el gamepad.*
 
-## ▶️ [**VER EL VIDEO**](ENLACE_DEL_VIDEO)
+## ▶️ [**VER EL VIDEO**](https://www.youtube.com/watch?v=LbUh0XEZPWI
 
-<sub>Si el enlace no abre, cópialo en tu navegador: `ENLACE_DEL_VIDEO`</sub>
+<sub>Si el enlace no abre, cópialo en tu navegador: `https://www.youtube.com/watch?v=LbUh0XEZPWI`</sub>
 
 </div>
 
