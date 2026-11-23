@@ -41,7 +41,7 @@ gamepad** USB tipo Xbox.
 | :-- | :-- |
 | 👩‍💻 **Equipo** | Daniela Martínez · Judith Mora · Luis Hernández |
 | 📜 **Licencia** | MIT (ver [`LICENSE`](LICENSE)) |
-| 🎬 **Video demostrativo** | [´Ver en Youtube'](https://www.youtube.com/watch?v=LbUh0XEZPWI) |
+| 🎬 **Video demostrativo** | ['Ver en Youtube'](https://www.youtube.com/watch?v=LbUh0XEZPWI) |
 | 📦 **Repositorio** | [`Consola Retro`](https://github.com/DanyMB2326/consola-retro-FSEm) |
 
 ---
