@@ -80,6 +80,18 @@ paso "Copiando el lanzador, los recursos y las ROMS"
 install -m 755 "$AQUI/launcher.py" "$CASA/launcher.py"
 mkdir -p "$CASA/assets" "$CASA/roms/nes" "$CASA/roms/snes" "$CASA/roms/gba"
 cp -f "$AQUI"/assets/*.png "$CASA/assets/"
+# Biblioteca que oculta la flecha del raton mientras Mednafen carga un juego
+if [ -f "$AQUI/sin_cursor.c" ]; then
+    if ! command -v gcc >/dev/null 2>&1 && [ "$SOLO_ARCHIVOS" != 1 ]; then
+        sudo apt-get install -y gcc libc6-dev
+    fi
+    if command -v gcc >/dev/null 2>&1 \
+       && gcc -shared -fPIC -O2 -o "$CASA/sin_cursor.so" "$AQUI/sin_cursor.c" -ldl; then
+        echo "Cursor oculto durante la carga de juegos (sin_cursor.so)"
+    else
+        aviso "No se pudo compilar sin_cursor.c; durante la carga de un juego puede verse la flecha del raton."
+    fi
+fi
 total=0
 for sis in nes snes gba; do
     for f in "$AQUI/roms/$sis"/*; do
