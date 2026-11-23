@@ -972,8 +972,10 @@ def jugar(ruta):
     mednafen = (shutil.which("mednafen")
                 or next((p for p in ("/usr/games/mednafen", "/usr/bin/mednafen")
                          if os.path.exists(p)), "mednafen"))
+    # snes_faust es mas ligero que el nucleo "snes" y se oye bien en la Pi 3
+    extra = ["-force_module", "snes_faust"] if ruta.lower().endswith((".sfc", ".smc")) else []
     proc = subprocess.Popen(
-        [mednafen, "-video.driver", "opengl", "-video.fs", "1",
+        [mednafen, *extra, "-video.driver", "opengl", "-video.fs", "1",
          "-sound.driver", "alsa", "-sound.device", "plughw:vc4hdmi,0", ruta],
         env=env, stdout=salida, stderr=subprocess.STDOUT)
     proceso = proc
